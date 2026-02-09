@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine ❤️</title>
+    <style>
+        body {
+            margin: 0; padding: 0; overflow: hidden;
+            background-color: #fff0f3;
+            font-family: 'Comic Sans MS', cursive;
+            display: flex; align-items: center; justify-content: center; height: 100vh;
+        }
+
+        #floating-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
+
+        .floating-item { position: absolute; bottom: -150px; animation: floatUp 8s linear infinite; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        #content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 25px; border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            text-align: center; z-index: 10; width: 90%; max-width: 600px;
+        }
+
+        h1 { color: #ff4d6d; font-size: 1.5rem; }
+
+        .question-img {
+            width: 100%; max-width: 250px; border-radius: 15px;
+            margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .success-layout {
+            display: flex; align-items: center; justify-content: center;
+            gap: 15px; margin-top: 20px;
+        }
+
+        .heart-frame {
+            width: 100px; height: 100px; object-fit: cover;
+            background-color: #ff4d6d;
+            clip-path: path('M50,90 C50,90 0,60 0,25 A25,25 0 0,1 50,25 A25,25 0 0,1 100,25 C100,60 50,90 50,90 Z');
+        }
+
+        .gif-wrapper { flex: 1; max-width: 200px; border-radius: 15px; overflow: hidden; }
+
+        .btn-group { margin-top: 20px; position: relative; height: 60px; }
+        button { padding: 12px 25px; font-size: 16px; border-radius: 50px; border: none; cursor: pointer; font-weight: bold; }
+
+        #yesBtn { background: #ff4d6d; color: white; transition: 0.3s; }
+        #yesBtn:hover { transform: scale(1.1); }
+
+        /* The No Button transition is set to 0.1s so it jumps instantly */
+        #noBtn { background: #adb5bd; color: white; position: absolute; transition: 0.1s ease-out; z-index: 100; }
+
+        .hidden { display: none; }
+
+        .f-photo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid white; }
+        .f-video { width: 90px; border-radius: 8px; }
+
+        @media (max-width: 480px) {
+          h1 { font-size: 1.2rem; }
+          .heart-frame { width: 70px; height: 70px; }
+          .gif-wrapper { max-width: 140px; }
+          .f-photo { width: 50px; height: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="floating-container"></div>
+
+    <div id="content">
+        <div id="question-section">
+            <img src="sad-ham.png" class="question-img" alt="Cute moment">
+            <h1>Will you be my Valentine forever n ever n ever? ❤️</h1>
+            <div class="btn-group">
+                <button id="yesBtn" onclick="showSuccess()">YES!</button>
+                <button id="noBtn" onmouseover="handleNoButton()" onclick="handleNoButton()">No</button>
+            </div>
+        </div>
+
+        <div id="success-section" class="hidden">
+            <h1> Meee lovesss uuuu buuuuuu smmmmmm! 😘</h1>
+            <div class="success-layout">
+                <img src="us.jpg" class="heart-frame">
+                <div class="gif-wrapper">
+                    <div class="tenor-gif-embed" data-postid="12948797434480163497" data-share-method="host" data-aspect-ratio="0.897436" data-width="100%"></div>
+                    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+                </div>
+                <img src="mcds.jpg" class="heart-frame">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleNoButton() {
+            const btn = document.getElementById('noBtn');
+
+            // Calculate a random position that keeps the button on screen
+            // Subtracting 150 to ensure it doesn't jump partially off-edge
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 150);
+
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function showSuccess() {
+            document.getElementById('question-section').classList.add('hidden');
+            document.getElementById('success-section').classList.remove('hidden');
+        }
+
+        const container = document.getElementById('floating-container');
+        const items = ['❤️', '💖', 'buuu-cat.png', 'buu-face.png', 'cat-blush.mp4', 'sad-face.mp4'];
+
+        function createFloatingItem() {
+            const item = document.createElement('div');
+            item.className = 'floating-item';
+            const content = items[Math.floor(Math.random() * items.length)];
+
+            if (content.endsWith('.png')) {
+                item.innerHTML = `<img src="${content}" class="f-photo" onerror="this.style.display='none'">`;
+            } else if (content.endsWith('.mp4')) {
+                item.innerHTML = `<video src="${content}" class="f-video" autoplay muted loop playsinline></video>`;
+            } else {
+                item.innerHTML = `<span style="color:#ff4d6d; font-size:25px;">${content}</span>`;
+            }
+
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            container.appendChild(item);
+            setTimeout(() => item.remove(), 8000);
+        }
+
+        setInterval(createFloatingItem, 600);
+    </script>
+</body>
+</html>
