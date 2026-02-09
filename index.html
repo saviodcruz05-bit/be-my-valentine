@@ -131,7 +131,7 @@
             item.className = 'floating-item';
             const content = items[Math.floor(Math.random() * items.length)];
 
-            if (content.endsWith('.png')) {
+            if (content.endsWith('.jpg')) {
                 item.innerHTML = `<img src="${content}" class="f-photo" onerror="this.style.display='none'">`;
             } else if (content.endsWith('.mp4')) {
                 item.innerHTML = `<video src="${content}" class="f-video" autoplay muted loop playsinline></video>`;
@@ -149,6 +149,7 @@
     </script>
 </body>
 </html>
+
 
 
 
